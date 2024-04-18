@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/api/api_manager.dart';
 import 'package:news_app/app_theme.dart';
 import 'package:news_app/home_screen.dart';
 
@@ -11,6 +12,7 @@ class NewsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ApiManager.getAllSources();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: MyAppTheme.lightTheme,

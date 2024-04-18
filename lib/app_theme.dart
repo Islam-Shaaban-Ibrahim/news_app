@@ -8,10 +8,10 @@ class MyAppTheme {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: primaryColor,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+          bottomLeft: Radius.circular(35),
+          bottomRight: Radius.circular(35),
         ),
       ),
     ),
