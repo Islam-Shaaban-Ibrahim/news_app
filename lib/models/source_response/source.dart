@@ -26,4 +26,6 @@ class Source {
         language: data['language'] as String?,
         country: data['country'] as String?,
       );
+
+  toJson() {}
 }
