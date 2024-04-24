@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/api/setting_screen.dart';
+import 'package:news_app/search/search_bar_widget.dart';
+import 'package:news_app/settings/setting_screen.dart';
 
 import 'package:news_app/app_theme.dart';
 import 'package:news_app/category/category_details.dart';
@@ -7,6 +8,7 @@ import 'package:news_app/category/category_grid.dart';
 
 import 'package:news_app/home_drawer.dart';
 import 'package:news_app/models/category_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,10 +33,18 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearchBar());
+                },
+                icon: Icon(Icons.search))
+          ],
           title: selectedWidget == DrawerOptions.settings
-              ? Text("Settings", style: Theme.of(context).textTheme.titleLarge)
+              ? Text(AppLocalizations.of(context)!.settings,
+                  style: Theme.of(context).textTheme.titleLarge)
               : category == null
-                  ? Text("News App",
+                  ? Text(AppLocalizations.of(context)?.news ?? '',
                       style: Theme.of(context).textTheme.titleLarge)
                   : Text(category!.categoryName,
                       style: Theme.of(context).textTheme.titleLarge),

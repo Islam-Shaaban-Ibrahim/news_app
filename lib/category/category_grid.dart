@@ -1,13 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/category/category_item.dart';
 import 'package:news_app/models/category_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryGrid extends StatelessWidget {
   final Function(CategoryDM) onSelectedCategory;
-  const CategoryGrid({super.key, required this.onSelectedCategory});
+  CategoryGrid({super.key, required this.onSelectedCategory});
 
   @override
   Widget build(BuildContext context) {
+    List<CategoryDM> categories = [
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.sports ?? '',
+        imageName: 'assets/images/ball.png',
+        categoryId: 'sports',
+        color: const Color(0xffC91C22),
+      ),
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.general ?? '',
+        imageName: 'assets/images/Politics.png',
+        categoryId: 'general',
+        color: const Color(0xff003E90),
+      ),
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.health ?? '',
+        imageName: 'assets/images/health.png',
+        categoryId: 'health',
+        color: const Color(0xffED1E79),
+      ),
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.business ?? '',
+        imageName: 'assets/images/bussines.png',
+        categoryId: 'business',
+        color: const Color(0xffCF7E48),
+      ),
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.entertainment ?? '',
+        imageName: 'assets/images/environment.png',
+        categoryId: 'entertainment',
+        color: const Color(0xff4882CF),
+      ),
+      CategoryDM(
+        categoryName: AppLocalizations.of(context)?.science ?? '',
+        imageName: 'assets/images/science.png',
+        categoryId: 'science',
+        color: const Color(0xffF2D352),
+      ),
+    ];
+
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: 10,
@@ -17,7 +57,7 @@ class CategoryGrid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Pick your category\nof interest',
+            AppLocalizations.of(context)?.category_leading ?? '',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: const Color(0xff4F5A69), fontWeight: FontWeight.bold),
           ),
@@ -34,10 +74,10 @@ class CategoryGrid extends StatelessWidget {
               ),
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  onSelectedCategory(CategoryDM.categories[index]);
+                  onSelectedCategory(categories[index]);
                 },
                 child: CategoryItem(
-                  category: CategoryDM.categories[index],
+                  category: categories[index],
                   index: index,
                 ),
               ),
