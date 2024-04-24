@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/api/api_manager.dart';
 import 'package:news_app/app_theme.dart';
+import 'package:news_app/news/news_content.dart';
 import 'package:news_app/news/news_item.dart';
-import 'package:news_app/models/source_response/source.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'news_content.dart';
-
-class NewsWidget extends StatefulWidget {
-  final Source source;
-  const NewsWidget({super.key, required this.source});
+class SearchResult extends StatefulWidget {
+  final String query;
+  const SearchResult({super.key, required this.query});
 
   @override
-  State<NewsWidget> createState() => _NewsWidgetState();
+  State<SearchResult> createState() => _SearchResultState();
 }
 
-class _NewsWidgetState extends State<NewsWidget> {
+class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiManager.getAllNews(widget.source.id ?? ''),
+        future: ApiManager.searchForTopics(widget.query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -40,7 +38,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ApiManager.getAllNews(widget.source.id ?? '');
+                    ApiManager.searchForTopics(widget.query);
                     setState(() {});
                   },
                   child: const Text('Try again'),
@@ -59,7 +57,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ApiManager.getAllNews(widget.source.id ?? '');
+                    ApiManager.searchForTopics(widget.query);
                     setState(() {});
                   },
                   child: const Text('Try again'),
@@ -68,18 +66,28 @@ class _NewsWidgetState extends State<NewsWidget> {
             );
           } else {
             var newsList = snapshot.data?.articles ?? [];
-            return newsList.isEmpty
-                ? Center(
-                    child: Text(
-                      AppLocalizations.of(context)?.no_news ?? '',
-                      style: Theme.of(context).textTheme.titleMedium,
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                      filterQuality: FilterQuality.high,
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/images/background.png'))),
+              child: newsList.isEmpty
+                  ? Center(
+                      child: Text(
+                        AppLocalizations.of(context)?.no_results ?? '',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: newsList.length,
+                      itemBuilder: (context, index) =>
+                          NewsItem(article: newsList[index]),
                     ),
-                  )
-                : ListView.builder(
-                    itemCount: newsList.length,
-                    itemBuilder: (context, index) =>
-                        NewsItem(article: newsList[index]),
-                  );
+            );
           }
         });
   }

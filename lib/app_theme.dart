@@ -8,7 +8,7 @@ class MyAppTheme {
   static ThemeData lightTheme = ThemeData(
     tabBarTheme: const TabBarTheme(splashFactory: NoSplash.splashFactory),
     appBarTheme: AppBarTheme(
-      foregroundColor: whiteColor,
+      iconTheme: IconThemeData(size: 30, color: whiteColor),
       centerTitle: true,
       color: primaryColor,
       shape: const RoundedRectangleBorder(

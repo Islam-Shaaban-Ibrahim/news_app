@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:news_app/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawerWidget extends StatelessWidget {
-  Function(DrawerOptions) selectedOption;
-  DrawerWidget({required this.selectedOption});
+  final Function(DrawerOptions) selectedOption;
+  const DrawerWidget({super.key, required this.selectedOption});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class DrawerWidget extends StatelessWidget {
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.2,
           child: Text(
-            'News App!',
+            '${AppLocalizations.of(context)?.news ?? ''} !',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -44,7 +43,7 @@ class DrawerWidget extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                'Category',
+                AppLocalizations.of(context)?.categories ?? '',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
@@ -73,7 +72,7 @@ class DrawerWidget extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                'Settings',
+                AppLocalizations.of(context)?.settings ?? '',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
