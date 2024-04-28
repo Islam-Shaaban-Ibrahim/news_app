@@ -84,8 +84,13 @@ class _SearchResultState extends State<SearchResult> {
                     )
                   : ListView.builder(
                       itemCount: newsList.length,
-                      itemBuilder: (context, index) =>
-                          NewsItem(article: newsList[index]),
+                      itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                                NewsContentScreen.routeName,
+                                arguments: newsList[index]);
+                          },
+                          child: NewsItem(article: newsList[index])),
                     ),
             );
           }

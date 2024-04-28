@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   showSearch(context: context, delegate: AppSearchBar());
                 },
-                icon: Icon(Icons.search))
+                icon: const Icon(Icons.search))
           ],
           title: selectedWidget == DrawerOptions.settings
               ? Text(AppLocalizations.of(context)!.settings,

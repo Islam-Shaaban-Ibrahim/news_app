@@ -40,7 +40,9 @@ class _DefaultTabBarWidgetState extends State<DefaultTabBarWidget> {
                             selectedIndex == widget.sources.indexOf(source),
                       ))
                   .toList()),
-          Expanded(child: NewsWidget(source: widget.sources[selectedIndex])),
+          Expanded(
+              child:
+                  NewsWidget(sourceId: widget.sources[selectedIndex].id ?? '')),
         ],
       ),
     );
