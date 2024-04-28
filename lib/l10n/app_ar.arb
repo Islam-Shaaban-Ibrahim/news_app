@@ -1,0 +1,19 @@
+{
+    "english":"الانجليزية",
+    "arabic":"العربية",
+    "lang":"اللغة",
+    "news":"الأخبار",
+    "settings":"الاعدادات",
+    "sports":"الرياضة",
+    "general":"عام",
+    "health":"الصحة",
+    "business":"الأعمال",
+    "entertainment":"الترفية",
+    "science":"العلوم",
+    "categories":"الأقسام",
+    "no_results":"لا يوجد نتائج !!",
+    "no_news":"لا يوجد أخبار متاحة !!",
+    "news_content":"الخبر",
+    "view_full_article":"عرض الخبر كاملا",
+    "category_leading":"اختر القسم المفضل لديك :"
+}
