@@ -21,11 +21,15 @@ class ApiManager {
     }
   }
 
-  static Future<NewsResponse?> getAllNews(String sourceId) async {
+  static Future<NewsResponse?> getAllNews(String sourceId,
+      {int page = 1}) async {
     final url = Uri.https(ApiConstants.baseUrl, ApiConstants.newsEndPoint, {
       'apiKey': ApiConstants.apiKey,
       'sources': sourceId,
+      'pageSize': 10.toString(),
+      'page': page.toString()
     });
+
     try {
       final response = await http.get(url);
       final json = jsonDecode(response.body);
@@ -40,7 +44,6 @@ class ApiManager {
     final url = Uri.https(ApiConstants.baseUrl, ApiConstants.newsEndPoint, {
       'apiKey': ApiConstants.apiKey,
       'q': '+$query',
-      'searchIn': 'title,description'
     });
     try {
       final response = await http.get(url);

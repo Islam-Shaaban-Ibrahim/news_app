@@ -13,5 +13,7 @@
     "categories":"Categories",
     "no_results":"No Results !!",
     "no_news":"No News Available !!",
+    "news_content":"Article",
+    "view_full_article":"View Full Article",
     "category_leading":"Pick your category \nof interest"
 }

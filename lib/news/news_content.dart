@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:news_app/app_theme.dart';
 import 'package:news_app/models/news_response/article.dart';
 import 'package:news_app/news/news_item.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsContentScreen extends StatelessWidget {
   static const String routeName = 'news_content';
@@ -24,49 +26,58 @@ class NewsContentScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-            title: Text('News Content',
+            title: Text(AppLocalizations.of(context)?.news_content ?? '',
                 style: Theme.of(context).textTheme.titleLarge)),
-        body: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-            NewsItem(
-              article: args,
-              content: args.content,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            GestureDetector(
-              onTap: () {
-                viewFullArticle(args.url ?? '');
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'View Full Article',
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              NewsItem(
+                article: args,
+                content: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    child: Text(
+                      overflow: TextOverflow.visible,
+                      args.description ?? '',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
-                          ?.copyWith(color: MyAppTheme.greyColor, fontSize: 18),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      (Icons.arrow_forward_ios_sharp),
-                      size: 18,
-                      color: MyAppTheme.greyColor,
-                    )
-                  ],
+                          ?.copyWith(fontSize: 16),
+                    )),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              GestureDetector(
+                onTap: () {
+                  viewFullArticle(args.url ?? '');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)?.view_full_article ?? '',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: MyAppTheme.greyColor, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        (Icons.arrow_forward_ios_sharp),
+                        size: 18,
+                        color: MyAppTheme.greyColor,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
