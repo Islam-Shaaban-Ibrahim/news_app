@@ -20,11 +20,11 @@ class _CategoryDetailsState extends State<CategoryDetails> {
   @override
   void initState() {
     super.initState();
+    viewModel.getSources(widget.category.categoryId);
   }
 
   @override
   Widget build(BuildContext context) {
-    viewModel.getSources(widget.category.categoryId);
     return ChangeNotifierProvider(
         create: (context) => viewModel,
         child: Consumer<CategoryViewModel>(builder: (context, value, child) {

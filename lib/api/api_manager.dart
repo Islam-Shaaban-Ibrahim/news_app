@@ -11,14 +11,11 @@ class ApiManager {
       'apiKey': ApiConstants.apiKey,
       'category': categoryId,
     });
-    try {
-      final response = await http.get(url);
-      final json = jsonDecode(response.body);
 
-      return SourceResponse.fromJson(json);
-    } catch (e) {
-      rethrow;
-    }
+    final response = await http.get(url);
+    final json = jsonDecode(response.body);
+
+    return SourceResponse.fromJson(json);
   }
 
   static Future<NewsResponse?> getAllNews(String sourceId,

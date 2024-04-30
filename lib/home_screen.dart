@@ -3,7 +3,7 @@ import 'package:news_app/search/search_bar_widget.dart';
 import 'package:news_app/settings/setting_screen.dart';
 
 import 'package:news_app/app_theme.dart';
-import 'package:news_app/category/category_details.dart';
+import 'package:news_app/api/sources/view/category_details.dart';
 import 'package:news_app/category/category_grid.dart';
 
 import 'package:news_app/home_drawer.dart';
