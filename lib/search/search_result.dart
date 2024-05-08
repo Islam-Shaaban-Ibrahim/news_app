@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/api/api_manager.dart';
-import 'package:news_app/app_theme.dart';
-import 'package:news_app/news/news_content.dart';
-import 'package:news_app/news/news_item.dart';
+import 'package:news_app/shared/api_manager.dart';
+import 'package:news_app/shared/app_theme.dart';
+import 'package:news_app/news/view/news_content.dart';
+import 'package:news_app/news/view/news_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchResult extends StatefulWidget {

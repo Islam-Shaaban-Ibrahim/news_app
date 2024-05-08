@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/api/api_manager.dart';
-import 'package:news_app/app_theme.dart';
+import 'package:news_app/shared/api_manager.dart';
+import 'package:news_app/shared/app_theme.dart';
 import 'package:news_app/models/news_response/article.dart';
-import 'package:news_app/news/news_content.dart';
-import 'package:news_app/news/news_item.dart';
+import 'package:news_app/news/view/news_content.dart';
+import 'package:news_app/news/view/news_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:news_app/news/view_model/news_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NewsWidget extends StatefulWidget {
   final String sourceId;
@@ -19,6 +21,7 @@ class _NewsWidgetState extends State<NewsWidget> {
   final listController = ScrollController();
   List<Article> articlesList = [];
   bool reachedEnd = false;
+  final viewModel = NewsViewModel();
 
   @override
   void initState() {
@@ -31,11 +34,15 @@ class _NewsWidgetState extends State<NewsWidget> {
         }
       }
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!reachedEnd) {
+      viewModel.getNews(widget.sourceId);
+    }
     if (reachedEnd) {
       ApiManager.getAllNews(widget.sourceId, page: ++page).then((value) {
         articlesList.addAll(value?.articles ?? []);
@@ -45,18 +52,17 @@ class _NewsWidgetState extends State<NewsWidget> {
       reachedEnd = false;
     }
 
-    return FutureBuilder(
-        future: ApiManager.getAllNews(
-          widget.sourceId,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
+    return ChangeNotifierProvider(
+      create: (context) => viewModel,
+      child: Consumer<NewsViewModel>(
+        builder: (context, value, child) {
+          if (viewModel.errorMessage != null) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
                   child: Text(
-                    'Something went wrong please\n             check your\n      internet connection',
+                    viewModel.errorMessage!,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
@@ -65,7 +71,9 @@ class _NewsWidgetState extends State<NewsWidget> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ApiManager.getAllNews(
+                    viewModel.newsList = null;
+                    viewModel.errorMessage = null;
+                    viewModel.getNews(
                       widget.sourceId,
                     );
                     setState(() {});
@@ -74,9 +82,12 @@ class _NewsWidgetState extends State<NewsWidget> {
                 )
               ],
             );
-          }
-          if (snapshot.hasData) {
-            var newsList = snapshot.data?.articles ?? [];
+          } else if (viewModel.newsList == null) {
+            return Center(
+              child: CircularProgressIndicator(color: MyAppTheme.primaryColor),
+            );
+          } else {
+            var newsList = viewModel.newsList ?? [];
             if (articlesList.isEmpty) {
               articlesList = newsList;
             }
@@ -108,12 +119,10 @@ class _NewsWidgetState extends State<NewsWidget> {
                           child: NewsItem(article: articlesList[index]));
                     },
                   );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(color: MyAppTheme.primaryColor),
-            );
           }
-        });
+        },
+      ),
+    );
   }
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:news_app/app_theme.dart';
+import 'package:news_app/shared/app_theme.dart';
 import 'package:news_app/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:news_app/news/news_content.dart';
+import 'package:news_app/news/view/news_content.dart';
 import 'package:news_app/settings/setting_provider.dart';
 
 import 'package:provider/provider.dart';

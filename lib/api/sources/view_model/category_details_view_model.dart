@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/api/api_manager.dart';
+import 'package:news_app/api/sources/data/repository/sources_repository.dart';
 import 'package:news_app/models/source_response/source.dart';
+import 'package:news_app/shared/service_locator.dart';
 
 class CategoryViewModel extends ChangeNotifier {
+  late final SourcesRepository repository;
+  CategoryViewModel() {
+    repository = SourcesRepository(ServiceLocator.sourcesDataSource);
+  }
   List<Source>? sources;
   String? errorMessage;
 
@@ -11,15 +16,9 @@ class CategoryViewModel extends ChangeNotifier {
     errorMessage = null;
     notifyListeners();
     try {
-      final response = await ApiManager.getAllSources(categoryId);
-      if (response?.status != 'ok') {
-        errorMessage = response?.message;
-      } else {
-        sources = response!.sources;
-        notifyListeners();
-      }
+      sources = await repository.getSources(categoryId);
     } catch (e) {
-      errorMessage = e.toString();
+      errorMessage = "Error loading sources";
     }
     notifyListeners();
   }

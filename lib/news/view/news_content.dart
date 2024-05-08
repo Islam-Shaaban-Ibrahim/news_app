@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:news_app/app_theme.dart';
+import 'package:news_app/shared/app_theme.dart';
 import 'package:news_app/models/news_response/article.dart';
-import 'package:news_app/news/news_item.dart';
+import 'package:news_app/news/view/news_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsContentScreen extends StatelessWidget {
